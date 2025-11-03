@@ -30,11 +30,11 @@ export function Chat() {
   console.log({messages});
 
   return (
-    <Card className="w-full max-w-2xl mx-auto h-[600px] flex flex-col">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Bot className="w-6 h-6" />
-          AI Chat Assistant
+    <Card className="w-full max-w-2xl mx-auto h-[600px] flex flex-col bg-slate-900/50 border-slate-800 backdrop-blur-xl shadow-2xl">
+      <CardHeader className="border-b border-slate-800">
+        <CardTitle className="flex items-center gap-2 text-slate-100">
+          <Bot className="w-6 h-6 text-blue-400" />
+          Chat
         </CardTitle>
       </CardHeader>
 
@@ -42,9 +42,10 @@ export function Chat() {
         <ScrollArea className="h-full px-4">
           <div className="space-y-4 py-4">
             {messages.length === 0 && (
-              <div className="text-center text-muted-foreground py-8">
-                <Bot className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Start a conversation with the AI assistant</p>
+              <div className="text-center text-slate-500 py-12">
+                <Bot className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                <p className="text-lg">Start a conversation</p>
+                <p className="text-sm text-slate-600 mt-2">Try asking me to generate an image or answer a question</p>
               </div>
             )}
 
@@ -63,8 +64,8 @@ export function Chat() {
                   <div
                     className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                       message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
+                        ? 'bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-slate-800 text-slate-300 shadow-lg'
                     }`}
                   >
                     {message.role === 'user' ? (
@@ -75,10 +76,10 @@ export function Chat() {
                   </div>
 
                   <div
-                    className={`rounded-lg px-4 py-2 ${
+                    className={`rounded-lg px-4 py-3 shadow-lg ${
                       message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
+                        ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-white'
+                        : 'bg-slate-800 text-slate-100 border border-slate-700'
                     }`}
                   >
                     <div className="text-sm whitespace-pre-wrap space-y-2">
@@ -148,14 +149,14 @@ export function Chat() {
             {isLoading && (
               <div className="flex gap-3 justify-start">
                 <div className="flex gap-3 max-w-[80%]">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-muted">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-slate-800 text-slate-300 shadow-lg">
                     <Bot className="w-4 h-4" />
                   </div>
-                  <div className="rounded-lg px-4 py-2 bg-muted">
+                  <div className="rounded-lg px-4 py-3 shadow-lg bg-slate-800 text-slate-100 border border-slate-700">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <div className="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <div className="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className="w-2 h-2 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <div className="w-2 h-2 rounded-full bg-pink-400 animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
                   </div>
                 </div>
@@ -165,16 +166,21 @@ export function Chat() {
         </ScrollArea>
       </CardContent>
 
-      <CardFooter className="border-t p-4">
+      <CardFooter className="border-t border-slate-800 p-4 bg-slate-900/30">
         <form onSubmit={handleSubmit} className="flex w-full gap-2">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask me anything or ask me to generate an image..."
+            placeholder="Ask me anything or generate an image..."
             disabled={isLoading}
-            className="flex-1"
+            className="flex-1 bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20"
           />
-          <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+          <Button
+            type="submit"
+            size="icon"
+            disabled={isLoading || !input.trim()}
+            className="bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg shadow-blue-500/20"
+          >
             <Send className="w-4 h-4" />
           </Button>
         </form>
